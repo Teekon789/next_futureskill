@@ -4,7 +4,10 @@ import { connectMongoDB } from "../../../../../lib/mongodb";
 import User from "../../../../../models/user";
 import bcrypt from 'bcryptjs'
 
+console.log("NEXTAUTH_SECRET in prod:", process.env.NEXTAUTH_SECRET);
+
 const authOptions = {
+  
     providers: [
         CredentialsProvider({
           name: 'credentials',
