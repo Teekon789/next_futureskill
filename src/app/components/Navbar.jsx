@@ -1,12 +1,22 @@
 "use client"
 
-import React from 'react'
-import Link from 'next/link'
-import Logo from '../../../public/next.svg'
-import Image from 'next/image'
-import { signOut } from 'next-auth/react'
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Logo from '../../../public/next.svg';
+import Image from 'next/image';
+import { signOut } from 'next-auth/react';
 
 function Navbar({ session }) {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);  // ให้แน่ใจว่าโค้ดนี้ทำงานในฝั่ง Client เท่านั้น
+  }, []);
+
+  if (!isClient) {
+    return null; // หรือแสดงข้อความว่า "กำลังโหลด..."
+  }
+
   return (
     <nav className='shadow-xl'>
         <div className='container mx-auto'>
@@ -35,4 +45,4 @@ function Navbar({ session }) {
   )
 }
 
-export default Navbar
+export default Navbar;

@@ -8,8 +8,12 @@ import Footer from "./components/Footer";
 import { useSession } from "next-auth/react";
 
 export default function Home() {
-  
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  // ยังโหลด session อยู่ → ยังไม่ render อะไร
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main>
