@@ -85,7 +85,7 @@ function WelcomePage() {
               <div className='mt-4 md:mt-0 bg-white/20 backdrop-blur-sm p-4 rounded-xl shadow-inner flex items-center'>
                 <User size={36} className='text-white mr-3' />
                 <div>
-                  <p className='text-sm'>อีเมล</p>
+                  <p className='text-sm'>Email</p>
                   <p className='font-medium'>{session?.user?.email}</p>
                 </div>
               </div>
