@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Container from './components/Container';
-import { BookOpen, Clock, ArrowRight, User, MessageCircle, Heart, Eye } from 'lucide-react';
+import { BookOpen, Clock, ArrowRight, User } from 'lucide-react';
 
 export default function HomePage() {
   const { data: session } = useSession();
@@ -101,17 +101,12 @@ export default function HomePage() {
     return text.substr(0, maxLength) + '...';
   };
 
-  // สร้างฟังก์ชัน random สำหรับจำนวนไลค์และการดู
-  const randomNumber = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
   // แสดงหน้าโหลดขณะดึงข้อมูล
   if (isLoading) {
     return (
       <Container>
         <Navbar session={session} />
-        <div className="flex-grow flex items-center justify-center">
+        <div className="flex-grow flex items-center justify-center min-h-[60vh]">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
         </div>
         <Footer />
@@ -125,11 +120,11 @@ export default function HomePage() {
 
       <div className="flex-grow bg-gray-50">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-16">
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">แหล่งรวมบทความคุณภาพ</h1>
-              <p className="text-xl mb-6">ค้นพบความรู้ใหม่ๆ และแบ่งปันประสบการณ์กับผู้อื่น</p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">แหล่งรวมบทความคุณภาพ</h1>
+              <p className="text-lg sm:text-xl mb-6">ค้นพบความรู้ใหม่ๆ และแบ่งปันประสบการณ์กับผู้อื่น</p>
               {session ? (
                 <Link 
                   href="/create" 
@@ -149,156 +144,119 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-8 md:py-12">
           {/* Featured Post */}
           {featuredPost && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+              <h2 className="text-xl md:text-2xl font-bold mb-6 text-gray-800 flex items-center">
                 <BookOpen className="mr-2 text-indigo-600" />
                 บทความล่าสุด
               </h2>
               
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+              <Link 
+                href={`/post/${featuredPost._id}`}
+                className="block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+              >
                 <div className="md:flex">
-                  <div className="md:w-1/2 relative h-60 md:h-auto">
+                  <div className="md:w-1/2 relative h-64 md:h-80">
                     <Image 
                       src={featuredPost.img || "/placeholder.png"} 
                       alt={featuredPost.title}
                       fill
                       className="object-cover"
                       priority
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
-                  <div className="md:w-1/2 p-6 md:p-8">
-                    <div className="flex items-center mb-4">
-                      <div className="bg-indigo-100 w-10 h-10 rounded-full flex items-center justify-center mr-3">
-                        <User className="text-indigo-600" />
+                  <div className="md:w-1/2 p-4 md:p-6 lg:p-8">
+                    <div className="flex items-center mb-3 md:mb-4">
+                      <div className="bg-indigo-100 w-8 h-8 rounded-full flex items-center justify-center mr-2">
+                        <User className="text-indigo-600 w-4 h-4" />
                       </div>
                       <div>
-                        <h3 className="font-medium text-gray-800">
+                        <h3 className="font-medium text-gray-800 text-sm md:text-base">
                           {authors[featuredPost.userEmail]?.name || "ผู้ใช้ไม่ระบุชื่อ"}
                         </h3>
-                        <p className="text-sm text-gray-500 flex items-center">
-                          <Clock size={14} className="mr-1" />
+                        <p className="text-xs md:text-sm text-gray-500 flex items-center">
+                          <Clock size={12} className="mr-1" />
                           {formatDate(featuredPost.createdAt)}
                         </p>
                       </div>
                     </div>
                     
-                    <h2 className="text-2xl font-bold mb-3 text-gray-800">{featuredPost.title}</h2>
-                    <p className="text-gray-600 mb-6">
+                    <h2 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-gray-800">{featuredPost.title}</h2>
+                    <p className="text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
                       {truncateText(featuredPost.content, 200)}
                     </p>
                     
-                    {/* สถิติการมีส่วนร่วม */}
-                    <div className="flex items-center space-x-4 text-gray-500 mb-6">
-                      <span className="flex items-center">
-                        <Heart size={16} className="mr-1 text-red-500" />
-                        {randomNumber(50, 500)}
-                      </span>
-                      <span className="flex items-center">
-                        <MessageCircle size={16} className="mr-1 text-blue-500" />
-                        {randomNumber(5, 50)}
-                      </span>
-                      <span className="flex items-center">
-                        <Eye size={16} className="mr-1" />
-                        {randomNumber(200, 2000)}
-                      </span>
+                    <div className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md transition-colors duration-300 text-sm md:text-base">
+                      <span className="mr-2">เข้าชมบทความ</span> <ArrowRight size={16} />
                     </div>
-                    
-                    <Link 
-                      href={`/post/${featuredPost._id}`}
-                      className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md transition-colors duration-300"
-                    >
-                      อ่านเพิ่มเติม <ArrowRight size={16} className="ml-2" />
-                    </Link>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           )}
 
           {/* All Posts */}
           <div>
-            <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
+            <h2 className="text-xl md:text-2xl font-bold mb-6 text-gray-800 flex items-center">
               <BookOpen className="mr-2 text-indigo-600" />
               บทความทั้งหมด
             </h2>
 
             {posts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {posts.map((post) => (
-                  <div 
-                    key={post._id} 
-                    className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-                  >
-                    <div className="relative h-48 w-full">
-                      <Image 
-                        src={post.img || "/placeholder.png"} 
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="p-5">
-                      <div className="flex items-center mb-3">
-                        <div className="bg-indigo-100 w-8 h-8 rounded-full flex items-center justify-center mr-2">
-                          <User size={14} className="text-indigo-600" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-800">
-                            {authors[post.userEmail]?.name || "ผู้ใช้ไม่ระบุชื่อ"}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            {formatDate(post.createdAt)}
-                          </p>
-                        </div>
+                  <div key={post._id} className="h-full flex">
+                    <Link 
+                      href={`/post/${post._id}`}
+                      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col w-full transform hover:-translate-y-1"
+                    >
+                      <div className="relative w-full h-48">
+                        <Image 
+                          src={post.img || "/placeholder.png"} 
+                          alt={post.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
                       </div>
-                      
-                      <h3 className="text-xl font-bold mb-2 text-gray-800">{post.title}</h3>
-                      <p className="text-gray-600 mb-4 line-clamp-3">
-                        {truncateText(post.content, 120)}
-                      </p>
-                      
-                      {/* สถิติการมีส่วนร่วม */}
-                      <div className="flex items-center justify-between text-gray-500 mb-4">
-                        <div className="flex items-center space-x-3">
-                          <span className="flex items-center">
-                            <Heart size={14} className="mr-1 text-red-500" />
-                            {randomNumber(10, 200)}
-                          </span>
-                          <span className="flex items-center">
-                            <MessageCircle size={14} className="mr-1 text-blue-500" />
-                            {randomNumber(0, 30)}
-                          </span>
+                      <div className="p-4 md:p-5 flex-grow flex flex-col">
+                        <div className="flex items-center mb-2">
+                          <div className="bg-indigo-100 w-7 h-7 rounded-full flex items-center justify-center mr-2">
+                            <User size={12} className="text-indigo-600" />
+                          </div>
+                          <div>
+                            <p className="text-xs md:text-sm font-medium text-gray-800">
+                              {authors[post.userEmail]?.name || "ผู้ใช้ไม่ระบุชื่อ"}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              {formatDate(post.createdAt)}
+                            </p>
+                          </div>
                         </div>
-                        <span className="flex items-center text-sm">
-                          <Eye size={14} className="mr-1" />
-                          {randomNumber(50, 1000)}
-                        </span>
+                        
+                        <h3 className="text-lg font-bold mb-2 text-gray-800 line-clamp-2">{post.title}</h3>
+                        <p className="text-gray-600 mb-3 text-sm line-clamp-3 flex-grow">
+                          {truncateText(post.content, 120)}
+                        </p>
                       </div>
-                      
-                      <Link 
-                        href={`/post/${post._id}`}
-                        className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium"
-                      >
-                        อ่านเพิ่มเติม <ArrowRight size={14} className="ml-1" />
-                      </Link>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="bg-white border border-gray-200 rounded-lg p-8 text-center">
-                <div className="flex justify-center mb-4">
-                  <BookOpen size={48} className="text-gray-400" />
+              <div className="bg-white border border-gray-200 rounded-lg p-6 md:p-8 text-center">
+                <div className="flex justify-center mb-3 md:mb-4">
+                  <BookOpen size={40} className="text-gray-400" />
                 </div>
-                <h3 className="text-xl font-medium text-gray-700 mb-2">ยังไม่มีบทความ</h3>
-                <p className="text-gray-500 mb-4">ขออภัย ยังไม่มีบทความในระบบ</p>
+                <h3 className="text-lg md:text-xl font-medium text-gray-700 mb-2">ยังไม่มีบทความ</h3>
+                <p className="text-gray-500 mb-4 text-sm md:text-base">ขออภัย ยังไม่มีบทความในระบบ</p>
                 {session && (
                   <Link 
                     href="/create" 
-                    className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md transition-colors duration-300"
+                    className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-md transition-colors duration-300 text-sm md:text-base"
                   >
                     เขียนบทความแรก <ArrowRight size={16} className="ml-2" />
                   </Link>
