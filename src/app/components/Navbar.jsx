@@ -32,6 +32,11 @@ function Navbar({ session }) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
+
+            <Link href="/" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium flex items-center">
+              <Home size={18} className="mr-1" />
+              หน้าแรก
+            </Link>
            
             <Link href="welcome" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium flex items-center">
               <BookOpen size={18} className="mr-1" />
@@ -53,6 +58,14 @@ function Navbar({ session }) {
                 
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+                    <Link
+                      href="/"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100  items-center"
+                    >
+                      <Home size={16} className="mr-2" />
+                      หน้าแรก
+                    </Link>
+
                     <Link 
                       href="/welcome" 
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100  items-center"
@@ -115,14 +128,6 @@ function Navbar({ session }) {
             <Home size={18} className="mr-2" />
             หน้าแรก
           </Link>
-          <Link 
-            href="/" 
-            className="block py-2 text-gray-700 border-b border-gray-200  items-center"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <BookOpen size={18} className="mr-2" />
-            บทความ
-          </Link>
           
           {session ? (
             <>
@@ -131,7 +136,7 @@ function Navbar({ session }) {
                 className="block py-2 text-gray-700 border-b border-gray-200  items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <User size={18} className="mr-2" />
+                <BookOpen size={18} className="mr-2" />
                 แดชบอร์ด
               </Link>
               <Link 

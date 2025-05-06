@@ -16,7 +16,7 @@ function LoginPage() {
     const [loading, setLoading] = useState(true);  // ใช้เพื่อควบคุมการแสดงผลในช่วงที่ยังโหลดข้อมูล
 
     const router = useRouter();
-    const { data: session } = useSession();
+    const { data: session,status } = useSession();
 
     useEffect(() => {
         if (status === 'loading') {
