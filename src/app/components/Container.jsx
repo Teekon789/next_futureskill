@@ -1,13 +1,13 @@
+"use client"
 
-
-import React from 'react'
+import React from 'react';
 
 function Container({ children }) {
   return (
-    <div className='flex flex-col min-h-screen'>
-        {children}
+    <div className="min-h-screen flex flex-col">
+      {children}
     </div>
-  )
+  );
 }
 
 export default Container;
