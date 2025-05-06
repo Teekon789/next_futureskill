@@ -121,11 +121,6 @@ export default function PostDetail() {
     setComment("");
   };
 
-  // สร้างฟังก์ชัน random สำหรับจำนวนไลค์และการดู
-  const randomNumber = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
   if (status === "loading" || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -191,24 +186,6 @@ export default function PostDetail() {
               className="object-cover"
               priority
             />
-          </div>
-          
-          {/* สถิติการมีส่วนร่วม */}
-          <div className="flex items-center justify-between py-3 border-b border-gray-200 mb-8 text-gray-500">
-            <div className="flex items-center space-x-4">
-              <span className="flex items-center">
-                <Heart size={18} className="mr-1 text-red-500" />
-                {randomNumber(10, 250)} ถูกใจ
-              </span>
-              <span className="flex items-center">
-                <MessageCircle size={18} className="mr-1 text-blue-500" />
-                {comments.length} ความคิดเห็น
-              </span>
-            </div>
-            <span className="flex items-center">
-              <Eye size={18} className="mr-1" />
-              {randomNumber(50, 1500)} การดู
-            </span>
           </div>
           
           {/* เนื้อหาบทความ */}
