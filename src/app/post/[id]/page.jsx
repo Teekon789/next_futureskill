@@ -12,6 +12,8 @@ import {
   Heart, MessageCircle, Share2, ArrowLeft, 
   ThumbsUp, Send, User, Clock, Calendar, Eye 
 } from 'lucide-react';
+import { redirect } from "next/navigation";
+import DashboardLoadingScreen from "@/app/components/DashboardLoadingScreen";
 
 export default function PostDetail() {
   const { id } = useParams();
@@ -149,7 +151,9 @@ export default function PostDetail() {
   return (
     <Container>
       <Navbar session={session} />
-      
+      {isLoading ? (
+        <DashboardLoadingScreen />
+      ) : (
       <div className="flex-grow bg-gray-50 py-8">
         <div className="max-w-4xl mx-auto px-4">
           {/* ลิงก์กลับไปหน้าหลัก */}
@@ -264,6 +268,9 @@ export default function PostDetail() {
           </div>
         </div>
       </div>
+      )}
+      
+      {/* ส่วนท้าย */}
       
       <Footer />
     </Container>
