@@ -10,13 +10,10 @@ import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import DeleteBtn from './DeleteBtn';
 import { PenSquare, Plus, Clock, BarChart3, BookOpen, User } from 'lucide-react';
+import DashboardLoadingScreen from '../components/DashboardLoadingScreen';
 
 function WelcomePage() {
   const { data: session } = useSession();
-  if (!session) redirect('/login');
-  
-  if (session?.user?.role === "admin") redirect("/admin");
-
   const [postData, setPostData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -26,16 +23,25 @@ function WelcomePage() {
 
   const userEmail = session?.user?.email;
 
+  if (!session) redirect('/login');
+  
+  if (session?.user?.role === "admin") redirect("/admin");
+
+
+
   const getPosts = async () => {
     try {
       setIsLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 1000));
       const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/posts?email=${userEmail}`, {
         cache: "no-store"
       });
 
       if (!res.ok) {
-        throw new Error("Failed to fetch posts.");
+        throw new Error("Failed to fetch posts");
       }
+
+      
 
       const data = await res.json();
       setPostData(data.posts);
@@ -64,6 +70,9 @@ function WelcomePage() {
   return (
     <Container>
       <Navbar session={session} />
+      {isLoading ? (
+        <DashboardLoadingScreen />
+      ) : (
       <div className='flex-grow bg-gray-50'>
         <div className='container mx-auto py-8 px-4'>
           {/* แบนเนอร์สำหรับผู้ใช้ */}
@@ -189,6 +198,8 @@ function WelcomePage() {
           </div>
         </div>
       </div>
+      )}
+      {/* พื้นที่สำหรับ Footer */}
       <Footer />
     </Container>
   );

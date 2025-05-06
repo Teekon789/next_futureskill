@@ -19,12 +19,25 @@ function LoginPage() {
     const { data: session } = useSession();
 
     useEffect(() => {
-        if (session) {
-            router.replace("welcome");
-        } else {
-            setLoading(false);  // ตั้งค่า loading เป็น false เมื่อ session พร้อมใช้งาน
+        if (status === 'loading') {
+          setLoading(true)
+          return
         }
-    }, [session, router]);
+        if (session) {
+          router.replace('/welcome')
+        }
+        setLoading(false)
+      }, [session, status, router])
+    
+      if (loading) {
+        return (
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="animate-pulse">
+              <div className="h-12 w-12 rounded-full border-4 border-t-indigo-600 animate-spin"></div>
+            </div>
+          </div>
+        )
+      }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,7 +58,7 @@ function LoginPage() {
         }
     }
 
-    if (loading) return <div>Loading...</div>;  // แสดง UI โหลดข้อมูลขณะรอข้อมูล session
+    
 
     return (
         <Container>
