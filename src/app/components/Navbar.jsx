@@ -1,9 +1,18 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { signOut } from 'next-auth/react';
-import { Menu, X, ChevronDown, User, LogOut, Home, BookOpen, PenSquare } from 'lucide-react';
+import React, { useState } from "react";
+import Link from "next/link";
+import { signOut } from "next-auth/react";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  User,
+  LogOut,
+  Home,
+  BookOpen,
+  PenSquare,
+} from "lucide-react";
 
 function Navbar({ session }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +27,7 @@ function Navbar({ session }) {
   };
 
   const handleSignOut = () => {
-    signOut({ callbackUrl: '/' });
+    signOut({ callbackUrl: "/" });
   };
 
   return (
@@ -32,17 +41,22 @@ function Navbar({ session }) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-
-            <Link href="/" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium flex items-center">
+            <Link
+              href="/"
+              className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium flex items-center"
+            >
               <Home size={18} className="mr-1" />
               หน้าแรก
             </Link>
-           
-            <Link href="welcome" className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium flex items-center">
+
+            <Link
+              href="welcome"
+              className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md font-medium flex items-center"
+            >
               <BookOpen size={18} className="mr-1" />
               แดชบอร์ด
             </Link>
-            
+
             {session ? (
               <div className="relative">
                 <button
@@ -55,7 +69,7 @@ function Navbar({ session }) {
                   {session.user.name}
                   <ChevronDown size={16} className="ml-1" />
                 </button>
-                
+
                 {isUserMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                     <Link
@@ -66,21 +80,21 @@ function Navbar({ session }) {
                       หน้าแรก
                     </Link>
 
-                    <Link 
-                      href="/welcome" 
+                    <Link
+                      href="/welcome"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100  items-center"
                     >
                       <BookOpen size={16} className="mr-2" />
                       แดชบอร์ด
                     </Link>
-                    <Link 
-                      href="/create" 
+                    <Link
+                      href="/create"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100  items-center"
                     >
                       <PenSquare size={16} className="mr-2" />
                       เขียนบทความ
                     </Link>
-                    <button 
+                    <button
                       onClick={handleSignOut}
                       className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100  items-center"
                     >
@@ -92,14 +106,14 @@ function Navbar({ session }) {
               </div>
             ) : (
               <div className="flex items-center space-x-2">
-                <Link 
-                  href="/login" 
+                <Link
+                  href="/login"
                   className="text-indigo-600 border border-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-50 transition-colors duration-300"
                 >
                   เข้าสู่ระบบ
                 </Link>
-                <Link 
-                  href="/register" 
+                <Link
+                  href="/register"
                   className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300"
                 >
                   สมัครสมาชิก
@@ -120,34 +134,31 @@ function Navbar({ session }) {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white px-4 py-2 shadow-md">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="block py-2 text-gray-700 border-b border-gray-200  items-center"
             onClick={() => setIsMenuOpen(false)}
-          >
-            <Home size={18} className="mr-2" />
-            หน้าแรก
-          </Link>
-          
+          ></Link>
+
           {session ? (
             <>
-              <Link 
-                href="/welcome" 
+              <Link
+                href="/welcome"
                 className="block py-2 text-gray-700 border-b border-gray-200  items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <BookOpen size={18} className="mr-2" />
                 แดชบอร์ด
               </Link>
-              <Link 
-                href="/create" 
+              <Link
+                href="/create"
                 className="block py-2 text-gray-700 border-b border-gray-200  items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <PenSquare size={18} className="mr-2" />
                 เขียนบทความ
               </Link>
-              <button 
+              <button
                 onClick={handleSignOut}
                 className="block w-full text-left py-2 text-gray-700  items-center"
               >
@@ -157,15 +168,15 @@ function Navbar({ session }) {
             </>
           ) : (
             <div className="flex flex-col space-y-2 py-2">
-              <Link 
-                href="/login" 
+              <Link
+                href="/login"
                 className="text-center text-indigo-600 border border-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-50 transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
                 เข้าสู่ระบบ
               </Link>
-              <Link 
-                href="/register" 
+              <Link
+                href="/register"
                 className="text-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300"
                 onClick={() => setIsMenuOpen(false)}
               >
