@@ -50,22 +50,7 @@ function AdminNav({ session }) {
 
           {/* เมนูสำหรับหน้าจอขนาดใหญ่ */}
           <div className="hidden md:flex items-center space-x-4">
-            {/* ลิงก์การนำทางหลัก */}
-            <Link href="/admin" className="text-white hover:text-indigo-200 px-3 py-2 rounded-md font-medium flex items-center">
-              <Home size={18} className="mr-1" />
-              แดชบอร์ด
-            </Link>
-            
-            <Link href="/admin/posts" className="text-white hover:text-indigo-200 px-3 py-2 rounded-md font-medium flex items-center">
-              <FileText size={18} className="mr-1" />
-              จัดการบทความ
-            </Link>
-            
-            <Link href="/admin/users" className="text-white hover:text-indigo-200 px-3 py-2 rounded-md font-medium flex items-center">
-              <Users size={18} className="mr-1" />
-              จัดการผู้ใช้
-            </Link>
-            
+            {/* ลิงก์การนำทางหลัก */}        
             <Link href="/" className="text-white hover:text-indigo-200 px-3 py-2 rounded-md font-medium flex items-center">
                 <Home size={18} className="mr-1" />
               หน้าแรก

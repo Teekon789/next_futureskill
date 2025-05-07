@@ -129,7 +129,7 @@ function AdminPostsManagePage() {
             {/* เนื้อหาหลัก */}
             <div className="flex-1">
               <div className="bg-white rounded-xl shadow-md overflow-hidden">
-                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 py-6 px-6">
+                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-6 px-6">
                   <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
                     จัดการบทความ
                   </h1>

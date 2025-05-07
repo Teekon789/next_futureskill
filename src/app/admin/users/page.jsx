@@ -89,7 +89,7 @@ function AdminUserManagePage() {
             <div className="flex-1">
               <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
                   <h1 className="text-2xl font-bold text-white">
                     จัดการผู้ใช้
                   </h1>
