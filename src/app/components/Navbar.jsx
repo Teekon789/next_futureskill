@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react"; //  ดึง useSession
 import {
   Menu,
   X,
@@ -14,9 +14,10 @@ import {
   PenSquare,
 } from "lucide-react";
 
-function Navbar({ session }) {
+function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+ const { data: session, status } = useSession(); //  ใช้ useSession
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -29,6 +30,8 @@ function Navbar({ session }) {
   const handleSignOut = () => {
     signOut({ callbackUrl: "/" });
   };
+
+ if (status === "loading") return null; //  ป้องกัน Hydration mismatch
 
   return (
     <nav className="bg-white shadow-md">

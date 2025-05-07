@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Container from "./components/Container";
+const Navbar = dynamic(() => import("./components/Navbar"), { ssr: false });
+const Footer = dynamic(() => import("./components/Footer"), { ssr: false });
+const Container = dynamic(() => import("./components/Container"), { ssr: false });
+import dynamic from "next/dynamic";
 import {
   BookOpen,
   Clock,
